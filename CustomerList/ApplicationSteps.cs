@@ -4,21 +4,25 @@ using CustomerList.Models.Interfaces;
 using CustomerList.Services.Interfaces;
 using CustomerList.UserInterfaces;
 using System.Text;
+using CustomerList.Models;
 
 namespace CustomerList;
 
 public class ApplicationSteps : IApplicationSteps
 {
+    private readonly AppOptions _appOptions;
     private readonly IUserInterface _userInterface;
     private readonly IFileParsingService _fileParsingService;
     private readonly ICustomerService _customerService;
 
     public ApplicationSteps(
+        AppOptions appOptions,
         IUserInterface userInterface,
         IFileParsingService fileParsingService,
         ICustomerService customerService
     )
     {
+        _appOptions = appOptions;
         _userInterface = userInterface;
         _fileParsingService = fileParsingService;
         _customerService = customerService;
@@ -91,15 +95,17 @@ public class ApplicationSteps : IApplicationSteps
     {
         foreach (var customer in customers)
         {
+            var outputFileSeparator = _appOptions.OutputFileSeparator;
+
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(customer.FullName);
-            stringBuilder.Append(" ");
+            stringBuilder.Append(outputFileSeparator);
             stringBuilder.Append(customer.Email);
-            stringBuilder.Append(" ");
+            stringBuilder.Append(outputFileSeparator);
             stringBuilder.Append(customer.VehicleType);
-            stringBuilder.Append(" ");
+            stringBuilder.Append(outputFileSeparator);
             stringBuilder.Append(customer.VehicleName);
-            stringBuilder.Append(" ");
+            stringBuilder.Append(outputFileSeparator);
             stringBuilder.Append(customer.VehicleLengthString);
 
             _userInterface.WriteLine(stringBuilder.ToString());

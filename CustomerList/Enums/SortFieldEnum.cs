@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CustomerList.Enums;
 
-namespace CustomerList.Enums
+public enum SortFieldEnum
 {
-    public enum SortFieldEnum
-    {
-        NoField,
-        FullName,
-        VehicleType
-    }
+    NoField,
+    FullName,
+    VehicleType
 }

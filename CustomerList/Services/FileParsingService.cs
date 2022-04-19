@@ -20,7 +20,7 @@ public class FileParsingService : IFileParsingService
 
     public IEnumerable<IEnumerable<string>> ParseFile(string? filePath)
     {
-        if (filePath == null)
+        if (string.IsNullOrWhiteSpace(filePath))
             throw new InvalidInputException("No file path provided.");
 
         var fileName = _fileService.GetFileName(filePath);

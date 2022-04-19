@@ -3,26 +3,23 @@ using CustomerList.UserInterfaces;
 
 namespace CustomerList;
 
-public class Application : IApplication
+public class Application
 {
-    private readonly AppOptions _appOptions;
     private readonly IUserInterface _userInterface;
     private readonly IApplicationSteps _applicationSteps;
 
     public Application(
-        AppOptions appOptions,
         IUserInterface userInterface,
         IApplicationSteps applicationSteps
     )
     {
-        _appOptions = appOptions;
         _userInterface = userInterface;
         _applicationSteps = applicationSteps;
     }
 
     public void Run()
     {
-        _userInterface.WriteLine(_appOptions.StartupMessage);
+        _userInterface.WriteLine("Welcome to the Outdoor.sy Customer List Tool!");
 
         while (true)
         {
@@ -36,7 +33,7 @@ public class Application : IApplication
                 break;
         }
 
-        _userInterface.WriteLine(_appOptions.ClosingMessage);
+        _userInterface.WriteLine("Thank you for using the Customer List Tool! Please press any key to exit.");
         _userInterface.WaitForKeyPress();
     }
 

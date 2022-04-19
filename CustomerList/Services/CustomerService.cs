@@ -4,16 +4,20 @@ using CustomerList.Factories.Interfaces;
 using CustomerList.Models;
 using CustomerList.Models.Interfaces;
 using CustomerList.Services.Interfaces;
-using CustomerList.Sorters.Interfaces;
 
 namespace CustomerList.Services;
 
 public class CustomerService : ICustomerService
 {
+    private readonly AppOptions _appOptions;
     private readonly ICustomerSorterFactory _customerSorterFactory;
 
-    public CustomerService(ICustomerSorterFactory customerSorterFactory)
+    public CustomerService(
+        AppOptions appOptions,
+        ICustomerSorterFactory customerSorterFactory
+    )
     {
+        _appOptions = appOptions;
         _customerSorterFactory = customerSorterFactory;
     }
 
@@ -21,17 +25,17 @@ public class CustomerService : ICustomerService
     {
         var parsedLineArray = parsedLine.ToArray();
 
-        if (parsedLineArray.Length != 6)
+        if (parsedLineArray.Length != _appOptions.NumberOfFields)
             throw new InvalidInputException("File contains invalid data.");
         
         return new Customer
         {
-            FirstName = parsedLineArray[0],
-            LastName = parsedLineArray[1],
-            Email = parsedLineArray[2],
-            VehicleType = parsedLineArray[3],
-            VehicleName = parsedLineArray[4],
-            VehicleLengthString = parsedLineArray[5]
+            FirstName = parsedLineArray[(int)CustomerFieldEnum.FirstName],
+            LastName = parsedLineArray[(int)CustomerFieldEnum.LastName],
+            Email = parsedLineArray[(int)CustomerFieldEnum.Email],
+            VehicleType = parsedLineArray[(int)CustomerFieldEnum.VehicleType],
+            VehicleName = parsedLineArray[(int)CustomerFieldEnum.VehicleName],
+            VehicleLengthString = parsedLineArray[(int)CustomerFieldEnum.VehicleLengthString]
         };
     }
 
